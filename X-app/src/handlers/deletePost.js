@@ -5,7 +5,7 @@ const deletePost = async (req, _url, _params) => {
   const data = await req.json(); // may change with htmx
   const postId = data.postId;
 
-  if (!dbIsUsersPost(req)) {
+  if (!dbIsUsersPost(postId, req)) {
     const html = /*html*/ `<div>Not your post</div>`;
     return htmlResponse(html, { status: 404 });
   }
