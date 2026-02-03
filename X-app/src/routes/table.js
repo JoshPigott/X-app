@@ -1,4 +1,5 @@
 import register from "../handlers/register.js";
+import login from "../handlers/login.js";
 import post from "../handlers/post.js";
 import { like, unlike } from "../handlers/like-unlike.js";
 import deletePost from "../handlers/deletePost.js";
@@ -7,6 +8,7 @@ import getPosts from "../handlers/getPosts.js";
 // Links methods, pathnames and handler together
 const tableRouter = [
   { method: "POST", path: "/register", handler: register },
+  { method: "POST", path: "/login", handler: login },
   { method: "POST", path: "/post", handler: post },
   { method: "POST", path: "/like", handler: like },
   { method: "POST", path: "/unlike", handler: unlike },

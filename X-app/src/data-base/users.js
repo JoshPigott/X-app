@@ -7,15 +7,17 @@ export function dbAddUser(id, username) {
 }
 
 // checks to if nobody else has that username
-export function dbValidUsername(username) {
+export function dbAccount(username) {
   const db = new DB("data/database.db");
-  const [result] = db.query("SELECT * FROM users WHERE username=?", [username]);
+  const [account] = db.query("SELECT * FROM users WHERE username=?", [
+    username,
+  ]);
   db.close();
 
-  if (result == undefined) {
-    return true;
+  if (account == undefined) {
+    return false;
   }
-  return false;
+  return account;
 }
 
 export function dbGetUsername(id) {
