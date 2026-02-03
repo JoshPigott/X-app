@@ -1,4 +1,5 @@
 import { DB } from "sqliteModule";
+import { getId } from "../authentication/session.js";
 
 export function dbNewPost(postId, userId, username, context) {
   const db = new DB("data/database.db");

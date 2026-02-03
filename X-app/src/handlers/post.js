@@ -15,7 +15,7 @@ const post = async (req, _url, _params) => {
 
   dbNewPost(postId, userId, username, content);
   const html = /*html*/ `<div>Post created</div>`;
-  return htmlResponse(html, { staus: 201 });
+  return htmlResponse(html, { status: 201 });
 };
 
 export default post;
