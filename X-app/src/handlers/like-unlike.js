@@ -1,8 +1,9 @@
 import { dbGetLikeNumber, dbUpdateLikes } from "../data-base/likes.js";
-import htmlResponse from "../helper-functions/htmlReponse.js";
+import htmlResponse from "../helper-functions/html-response.js";
 
-export async function like(req, _url, _params) {
-  const data = await req.json(); // may change with htmx
+// Increases the number of likes on the post by one
+export async function like(ctx) {
+  const data = await ctx.req.json(); // may change with htmx
   const postId = data.postId;
 
   let likeNum = dbGetLikeNumber(postId);
@@ -13,8 +14,9 @@ export async function like(req, _url, _params) {
   return htmlResponse(html, { status: 200 });
 }
 
-export async function unlike(req, _url, _params) {
-  const data = await req.json(); // may change with htmx
+// Decreases the number of likes on the post by one
+export async function unlike(ctx) {
+  const data = await ctx.req.json(); // may change with htmx
   const postId = data.postId;
 
   let likeNum = dbGetLikeNumber(postId);

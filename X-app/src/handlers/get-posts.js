@@ -1,7 +1,8 @@
-import htmlResponse from "../helper-functions/htmlReponse.js";
+import htmlResponse from "../helper-functions/html-response.js";
 import { dbGetPosts } from "../data-base/posts.js";
 
-const getPosts = (_req, _url, _params) => {
+// Gets all the posts from data base
+const getPosts = (_ctx) => {
   const posts = dbGetPosts();
   console.log("All the posts:", posts);
   const html = /*html*/ `<div>We have all the posts</div>`;

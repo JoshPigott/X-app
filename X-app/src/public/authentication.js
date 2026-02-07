@@ -1,0 +1,43 @@
+// deno-lint-ignore no-import-prefix
+import { startAuthentication } from "https://esm.sh/@simplewebauthn/browser";
+
+// Allows the user to login
+async function authenticate(e) {
+  const response = e.detail.xhr;
+
+  // gets login options
+  const options = await JSON.parse(response.responseText);
+
+  if (response.status === 404) {
+    console.log(options.error);
+    return;
+  }
+
+  // starts login
+  const attestation = await startAuthentication({ optionsJSON: options });
+
+  // checks login
+  const res = await fetch("/authenticate/verification", {
+    method: "POST",
+    headers: { "content-type": "application/json; charset=UTF-8" },
+    body: JSON.stringify(attestation),
+  });
+
+  const body = await res.json();
+  const accepted = body.verified;
+
+  // logging for debugging
+  if (accepted) {
+    console.log("authentification accepted ✅");
+  } else {
+    console.log("authentification unsuccessful ❌");
+  }
+}
+
+// Sends up an event after every request
+document.body.addEventListener("htmx:afterRequest", async (e) => {
+  // Only call authenticate after you sent a request for login options
+  if (e.detail.pathInfo.requestPath === "/authenticate/start") {
+    await authenticate(e);
+  }
+});

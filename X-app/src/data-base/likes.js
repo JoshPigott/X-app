@@ -2,9 +2,9 @@ import { DB } from "sqliteModule";
 
 export function dbGetLikeNumber(postId) {
   const db = new DB("data/database.db");
-  const rows = db.query("SELECT * FROM posts WHERE id=?", [postId]);
+  const [[likes]] = db.query("SELECT likes FROM posts WHERE id=?", [postId]);
   db.close();
-  return rows[0][4]; // This could break easily
+  return likes;
 }
 
 export function dbUpdateLikes(postId, likes) {

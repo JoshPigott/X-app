@@ -8,6 +8,7 @@ Recreating the basic X app.
 - Account and sessions
 - Post with likes and unliking
 - A post should show the test and account
+- Passkeys login and sign up
 
 # Stack / tools used
 
@@ -24,34 +25,49 @@ Recreating the basic X app.
 ├── README.md
 │
 ├── .vscode
-│       settings.json
+│    └── settings.json
 │
 ├── data
-│       database.db
+│   └── database.db
 │
 └── src
     ├── server.js
     │
-    ├── authentication
-    │   └── session.js
+    ├── webauthn
+    │   ├── authentication
+    │   │   ├── get-options.js
+    │   │   └── verify-response.js
+    │   │   
+    │   ├── registration
+    │   │   ├── create-options.js
+    │   │   └── verify-response.js
+    │   │       
+    │   └── sessions.js
+    │       └── session.js
     │
     ├── data-base
+    │   ├── account-challenge.js   
     │   ├── likes.js
+    │   ├── passkeys.js    
     │   ├── posts.js
     │   ├── table.js
     │   └── users.js
     │
     ├── handlers
-    │   ├── deletePost.js
-    │   ├── getPosts.js
+    │   ├── authentication.js    
+    │   ├── delete-post.js
+    │   ├── get-posts.js
     │   ├── like-unlike.js
     │   ├── post.js
-    │   └── register.js
+    │   └── registration.js
     │
     ├── helper-functions
-    │   └── htmlReponse.js
+    │   ├── json-response.js   
+    │   └── html-response.js
     │
     ├── public
+    │   ├── authentication.js
+    │   ├── registration.js        
     │   └── index.html
     │
     ├── routes
@@ -62,6 +78,10 @@ Recreating the basic X app.
 
 # Notes for Devlopment
 
+- The public key is not read right propbaly beacuase I am not sending it in the
+  right format
+- I need to uses generateAuthenticationOptions for login in
+
 ## Other Note
 
 - I will need to chagne the branch from master to main at some point when I
@@ -69,9 +89,20 @@ Recreating the basic X app.
 
 # What I still need to do
 
-- delete post and get all post - login
-- login api thing
-- passkeys
+- get this passkeys debugged
+- make sure options is deleted
+- Have a quick learning session about what I can take away from it
+- And look what docments I can use next time how would I do it next time
+- put comments in the files I just need to the verifcation and data-base folder
+- update the readme
+- commit
+
+# I don't really understand the promblem
+
+- So thing are getting passed in the wrong format.
+- So I should try and understad what need to get passed
+- And in what format
+- Then I need to get thoose things
 
 ## Notes
 

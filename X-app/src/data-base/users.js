@@ -7,24 +7,25 @@ export function dbAddUser(id, username) {
 }
 
 // checks to if nobody else has that username
-export function dbAccount(username) {
+export function dbGetId(username) {
   const db = new DB("data/database.db");
-  const [account] = db.query("SELECT * FROM users WHERE username=?", [
+  let [id] = db.query("SELECT id FROM users WHERE username=?", [
     username,
   ]);
+
+  if (id !== undefined) { // I don't really understand why this happening
+    [id] = id;
+  }
   db.close();
 
-  if (account == undefined) {
-    return false;
-  }
-  return account;
+  // Return the users account
+  return id;
 }
 
 export function dbGetUsername(id) {
   const db = new DB("data/database.db");
 
-  const [result] = db.query("SELECT * users WHERE id=?", [id]);
-  const username = result[1];
+  const [[username]] = db.query("SELECT username FROM users WHERE id=?", [id]);
 
   db.close();
   return username;

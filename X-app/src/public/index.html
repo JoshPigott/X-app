@@ -3,7 +3,32 @@
   <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>For testing of passkeys</title>
+    <!--Enables htmx-->
+    <script
+      src="https://cdn.jsdelivr.net/npm/htmx.org@2.0.8/dist/htmx.min.js"
+      integrity="sha384-/TgkGk7p307TH7EXJDuUlgG3Ce1UVolAOFopFekQkkXihi5u/6OCvVKyz1W+idaz"
+      crossorigin="anonymous"
+    ></script>
   </head>
-  <body></body>
+  <body>
+    <!--Sets up a login form-->
+    <form>
+      <label for="username" class="username">Enter in your username:</label>
+      <input
+        type="TEXT"
+        id="username"
+        name="username"
+        class="username"
+      />
+      <button type="submit" hx-post="/register/start" hx-swap="none">
+        Register
+      </button>
+      <button type="submit" hx-post="/authenticate/start" hx-swap="none">
+        Login
+      </button>
+    </form>
+  </body>
+  <script src="authentication.js" type="module"></script>
+  <script src="registration.js" type="module"></script>
 </html>

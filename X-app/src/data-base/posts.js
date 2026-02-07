@@ -1,5 +1,5 @@
 import { DB } from "sqliteModule";
-import { getId } from "../authentication/session.js";
+import { getId } from "../webauthn/sessions/session.js";
 
 export function dbNewPost(postId, userId, username, context) {
   const db = new DB("data/database.db");
@@ -13,10 +13,13 @@ export function dbNewPost(postId, userId, username, context) {
 
 export function dbIsUsersPost(postId, req) {
   const db = new DB("data/database.db");
-  const rows = db.query("SELECT * FROM posts WHERE id=?", [postId]);
-  const postUserId = rows[0][1];
+  const [[postUserId]] = db.query("SELECT userId FROM posts WHERE id=?", [
+    postId,
+  ]);
+
   const currentUserId = getId(req);
   db.close();
+
   // return if it their post or not
   return postUserId === currentUserId;
 }
