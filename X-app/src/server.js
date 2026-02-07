@@ -3,6 +3,7 @@ import { dirname, join } from "pathModule";
 import { fromFileUrl } from "fromFileUrlModule";
 import setupDatabase from "./data-base/table.js";
 import compiledRouter from "./routes/table.js";
+import json from "./helper-functions/json-response.js";
 
 // setups data base
 setupDatabase();
@@ -21,6 +22,7 @@ async function isStaticFile(filePath) {
 
 async function serveStaticFiles(req, pathname) {
   let filePath;
+  // Gets the current directory path
   const __dirname = dirname(fromFileUrl(import.meta.url));
   if (pathname === "/") {
     filePath = join(__dirname, "public", "index.html");
@@ -34,19 +36,10 @@ async function serveStaticFiles(req, pathname) {
   return null;
 }
 
-// Helper function
-function json(data, init) {
-  const headers = new Headers(init.headers);
-  headers.set("content-type", "application/json; charset=UTF-8");
-  return new Response(JSON.stringify(data), { ...init, headers });
-}
-
 // If pathname not found returns pathname with an error
 function notFound(pathname) {
-  if (pathname !== "/favicon.ico") { // Ignore specific requests and not get an error But this should get updated in the further
-    console.log(`${pathname} was not found`);
-    return json({ error: `${pathname} was not found` }, { status: 404 });
-  }
+  console.log(`${pathname} was not found`);
+  return json({ error: `${pathname} was not found` }, { status: 404 });
 }
 
 // Finds the right handler/fucnation to get correct Response
@@ -60,6 +53,7 @@ async function server(req) {
     return staticFile;
   }
 
+  // Finds route of request
   for (const r of compiledRouter) {
     if (r.method !== req.method) {
       continue;
@@ -68,8 +62,10 @@ async function server(req) {
     if (!matches) {
       continue;
     }
+    // Allows url prama to be sent
     const params = matches?.groups ?? {};
-    return await r.handler(req, url, params);
+    const theHandler = await r.handler({ req, url, params });
+    return theHandler;
   }
   return notFound(pathname);
 }
@@ -83,4 +79,5 @@ async function safeServer(req) {
     return json(`${err}`, { status: 400 });
   }
 }
+// Starts server
 Deno.serve({ port: 8000 }, safeServer);
