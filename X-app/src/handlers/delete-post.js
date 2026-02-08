@@ -1,9 +1,8 @@
 import htmlResponse from "../helper-functions/html-response.js";
 import { dbDeletePost, dbIsUsersPost } from "../data-base/posts.js";
 
-const deletePost = async (ctx) => {
-  const data = await ctx.req.json(); // may change with htmx
-  const postId = data.postId;
+const deletePost = (ctx) => {
+  const postId = ctx.params.id;
 
   // Post maker only able to delete
   if (!dbIsUsersPost(postId, ctx.req)) {
@@ -13,7 +12,7 @@ const deletePost = async (ctx) => {
 
   // Deletes the post from the database
   dbDeletePost(postId);
-  const html = /*html*/ `<div>Post deleted</div>`;
+  const html = /*html*/ ``;
   return htmlResponse(html, { status: 200 });
 };
 export default deletePost;

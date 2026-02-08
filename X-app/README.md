@@ -89,11 +89,8 @@ Recreating the basic X app.
 
 # What I still need to do
 
-- get this passkeys debugged
-- make sure options is deleted
 - Have a quick learning session about what I can take away from it
 - And look what docments I can use next time how would I do it next time
-- put comments in the files I just need to the verifcation and data-base folder
 - update the readme
 - commit
 
@@ -108,3 +105,5 @@ Recreating the basic X app.
 
 - Try and copy the UI exactly
 - Have passkeys / login (not with a password)
+- At some point I want to add in a feature that checks if there is a session if
+  not it moves you to the login page

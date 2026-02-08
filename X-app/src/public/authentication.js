@@ -8,10 +8,16 @@ async function authenticate(e) {
   // gets login options
   const options = await JSON.parse(response.responseText);
 
+  // Allow you to show the user what is happeing so it does look the stite has crashed
+  const meassage = document.querySelector(".meassage");
+
   if (response.status === 404) {
     console.log(options.error);
+    meassage.textContent = `${options.error}`;
     return;
   }
+  meassage.textContent =
+    `Please wait. Processing the passkey this may take some time.`;
 
   // starts login
   const attestation = await startAuthentication({ optionsJSON: options });
@@ -28,7 +34,8 @@ async function authenticate(e) {
 
   // logging for debugging
   if (accepted) {
-    console.log("authentification accepted ✅");
+    // switches to home page
+    globalThis.location.href = "./home.html";
   } else {
     console.log("authentification unsuccessful ❌");
   }

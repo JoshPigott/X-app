@@ -36,7 +36,7 @@ const getVerification = async (body) => {
   if (verification.verified) {
     // Adds one the counter
     updateCounter(id);
-    44;
+
     const sessionId = createSession(account.id, account.username);
     console.log("sessionId:", sessionId);
 
