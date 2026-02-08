@@ -63,7 +63,7 @@ async function server(req) {
       continue;
     }
     // Allows url prama to be sent
-    const params = matches?.groups ?? {};
+    const params = matches.pathname?.groups ?? {};
     const theHandler = await r.handler({ req, url, params });
     return theHandler;
   }

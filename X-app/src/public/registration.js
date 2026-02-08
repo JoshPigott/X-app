@@ -7,10 +7,17 @@ async function register(e) {
   // gets registration options
   const options = await JSON.parse(response.responseText);
 
+  // Allow you to show the user what is happeing so it does look the stite has crashed
+  const meassage = document.querySelector(".meassage");
+
   if (response.status === 404) {
     console.log(options.error);
+    meassage.textContent = `${options.error}`;
     return;
   }
+
+  meassage.textContent =
+    `Please wait. Processing the passkey this may take some time.`;
 
   // starts registration with passkey
   const attestation = await startRegistration({ optionsJSON: options });
@@ -27,7 +34,8 @@ async function register(e) {
 
   // logging for debugging
   if (accepted) {
-    console.log("registration successful ✅");
+    // switches to home page
+    globalThis.location.href = "./home.html";
   } else {
     console.log("registration unsuccessful ❌");
   }

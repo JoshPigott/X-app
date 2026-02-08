@@ -1,28 +1,27 @@
 import { dbGetLikeNumber, dbUpdateLikes } from "../data-base/likes.js";
+import { likeTemplate, unlikeTemplate } from "../view/likes.js";
 import htmlResponse from "../helper-functions/html-response.js";
 
 // Increases the number of likes on the post by one
-export async function like(ctx) {
-  const data = await ctx.req.json(); // may change with htmx
-  const postId = data.postId;
+export function like(ctx) {
+  const postId = ctx.params.id;
 
   let likeNum = dbGetLikeNumber(postId);
   likeNum += 1;
   dbUpdateLikes(postId, likeNum);
 
-  const html = /*html*/ `<div>Post liked! ${likeNum} total likes</div>`;
+  const html = unlikeTemplate({ id: postId, likes: likeNum });
   return htmlResponse(html, { status: 200 });
 }
 
 // Decreases the number of likes on the post by one
-export async function unlike(ctx) {
-  const data = await ctx.req.json(); // may change with htmx
-  const postId = data.postId;
+export function unlike(ctx) {
+  const postId = ctx.params.id;
 
   let likeNum = dbGetLikeNumber(postId);
   likeNum -= 1;
   dbUpdateLikes(postId, likeNum);
 
-  const html = /*html*/ `<div>Post unliked! ${likeNum} total likes</div>`;
+  const html = likeTemplate({ id: postId, likes: likeNum });
   return htmlResponse(html, { status: 200 });
 }
