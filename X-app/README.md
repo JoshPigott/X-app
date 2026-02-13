@@ -106,7 +106,7 @@ Home page
     └── view
 ```
 
-## Key functions / logic
+## Key logic
 
 **Common flow**
 
