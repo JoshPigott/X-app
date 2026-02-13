@@ -9,15 +9,19 @@ async function authenticate(e) {
   const options = await JSON.parse(response.responseText);
 
   // Allow you to show the user what is happeing so it does look the stite has crashed
-  const meassage = document.querySelector(".meassage");
+  const meassage = document.querySelector(".auth-page__meassage");
 
   if (response.status === 404) {
     console.log(options.error);
     meassage.textContent = `${options.error}`;
     return;
   }
-  meassage.textContent =
-    `Please wait. Processing the passkey this may take some time.`;
+
+  meassage.textContent = [
+    "Please wait.",
+    "Processing the passkey...",
+    "This may take some time.",
+  ].join("\n");
 
   // starts login
   const attestation = await startAuthentication({ optionsJSON: options });

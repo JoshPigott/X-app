@@ -1,6 +1,6 @@
 import { DB } from "sqliteModule";
 const setupDatabase = () => {
-  const db = new DB("data/database.db");
+  const db = new DB("src/data/database.db");
   // Users table
   db.execute(`CREATE TABLE IF NOT EXISTS users (
     id TEXT PRIMARY KEY NOT NULL,
@@ -21,7 +21,7 @@ const setupDatabase = () => {
   db.close();
 };
 export default setupDatabase;
-
+setupDatabase();
 // tables
 // id, username
 // posts username, content, likes, time of post

@@ -44,9 +44,6 @@ const getVerification = async (body) => {
     const credentialId = verification.registrationInfo.credential.id;
     const publicKey = verification.registrationInfo.credential.publicKey;
     const counter = verification.registrationInfo.credential.counter;
-    console.log("credentialId:", credentialId);
-    console.log("publicKey:", publicKey);
-    console.log("counter:", counter);
 
     addPasskey(account.id, credentialId, publicKey, counter);
 
