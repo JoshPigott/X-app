@@ -2,8 +2,9 @@ import { DB } from "sqliteModule";
 
 // transports = [transportsType], transportsType = (often) "internal",  as an array can't be stored in the database
 
+// returns passkey ID credentials in the format of [{id:id, transport: transport}] from database
 export function getCredentialIds(userId) {
-  const db = new DB("data/database.db");
+  const db = new DB("src/data/database.db");
   const credentials = db.query(
     "SELECT credentialId, transportsType FROM passkeys WHERE userId=?",
     [userId],
@@ -24,6 +25,7 @@ export function getCredentialIds(userId) {
   return formatedCredentials;
 }
 
+// Adds a passkey to the database
 export function addPasskey(
   userId,
   credentialId,
@@ -31,7 +33,7 @@ export function addPasskey(
   counter,
   transports,
 ) {
-  const db = new DB("data/database.db");
+  const db = new DB("src/data/database.db");
   const [transportsType] = transports;
   db.query(
     "INSERT into passkeys (userId, credentialId, publicKey, counter, transportsType) VALUES(?, ?, ?, ?, ?)",
@@ -40,12 +42,14 @@ export function addPasskey(
   db.close();
 }
 
+// returns a passkey credentials containing id, publickey, counter and transports from the database
 export function getCredentials(credentialId) {
-  const db = new DB("data/database.db");
+  const db = new DB("src/data/database.db");
   const [[publicKey, counter, transportsType]] = db.query(
     "SELECT publicKey, counter, transportsType FROM passkeys WHERE credentialId=?",
     [credentialId],
   );
+  // Updates of tranport from a string to an array
   const transports = [transportsType];
   db.close();
   return {
@@ -56,8 +60,9 @@ export function getCredentials(credentialId) {
   };
 }
 
+// Increases the counter of a passkey by one after it is used
 export function updateCounter(credentialId) {
-  const db = new DB("data/database.db");
+  const db = new DB("src/data/database.db");
   let [[counter]] = db.query(
     "SELECT counter FROM passkeys WHERE credentialId=?",
     [credentialId],

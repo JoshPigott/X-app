@@ -10,16 +10,45 @@
       integrity="sha384-/TgkGk7p307TH7EXJDuUlgG3Ce1UVolAOFopFekQkkXihi5u/6OCvVKyz1W+idaz"
       crossorigin="anonymous"
     ></script>
+    <link href="style.css" rel="stylesheet" />
   </head>
   <body>
-    <div class="display-posts" hx-get="/posts" hx-trigger="load"></div>
-    <br>
-    <br>
-    <button hx-get="/post/form" hx-swap="outerHTML" hx-target=".post-area">
-      Post
-    </button>
-    <br>
-    <br>
-    <div class="post-area"></div>
+    <div class="home">
+      <section class="buttons">
+        <!--No features will get added here-->
+      </section>
+
+      <section class="posts">
+        <div class="posts__feed">
+          <h5>For you</h5>
+          <h5>Following</h5>
+        </div>
+        <div class="posts__form">
+          <form>
+            <textarea
+              name="content"
+              class="posts__form--text"
+              placeholder="What is happening?"
+              row="2"
+            ></textarea>
+            <button
+              class="posts__form--btn"
+              type="sumbit"
+              hx-post="/post"
+              hx-target=".posts__container"
+              hx-swap="beforeend"
+              hx-on::after-request="document.querySelector('form').reset();"
+            >
+              Post
+            </button>
+          </form>
+        </div>
+
+        <div class="posts__container" hx-get="/posts" hx-trigger="load"></div>
+      </section>
+      <section class="explore">
+        <!--No features will get added here-->
+      </section>
+    </div>
   </body>
 </html>

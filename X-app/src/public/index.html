@@ -3,33 +3,48 @@
   <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>For testing of passkeys</title>
+    <title>X-App</title>
     <!--Enables htmx-->
     <script
       src="https://cdn.jsdelivr.net/npm/htmx.org@2.0.8/dist/htmx.min.js"
       integrity="sha384-/TgkGk7p307TH7EXJDuUlgG3Ce1UVolAOFopFekQkkXihi5u/6OCvVKyz1W+idaz"
       crossorigin="anonymous"
     ></script>
+    <link href="style.css" rel="stylesheet" />
   </head>
   <body>
-    <!--Sets up a login form-->
-    <form>
-      <label for="username" class="username">Enter in your username:</label>
-      <input
-        type="TEXT"
-        id="username"
-        name="username"
-        class="username"
-      />
-      <button type="submit" hx-post="/register/start" hx-swap="none">
-        Register
-      </button>
-      <button type="submit" hx-post="/authenticate/start" hx-swap="none">
-        Login
-      </button>
-    </form>
-    <!--Provides feedback to the user: shows what’s happening-->
-    <div class="meassage"></div>
+    <div class="auth-page">
+      <div class="auth-page___x-symbol--container">
+        <h1 class="auth-page___x-symbol">X</h1>
+      </div>
+      <div class="auth-page__form">
+        <h2 class="auth-page__title">Happening Now</h2>
+        <h3 class="auth-page__subtitle">Join Today.</h3>
+
+        <!--Sets up a auth form-->
+        <form>
+          <label for="username" class="auth-page__username"
+          >Enter in your username:</label>
+          <input
+            type="TEXT"
+            id="username"
+            name="username"
+            class="username auth"
+          />
+          <div class="auth-page__buttons">
+            <button type="submit" hx-post="/register/start" hx-swap="none">
+              Register
+            </button>
+            <button type="submit" hx-post="/authenticate/start" hx-swap="none">
+              Login
+            </button>
+          </div>
+        </form>
+
+        <!--Provides feedback to the user: shows what’s happening-->
+        <pre class="auth-page__meassage"></pre>
+      </div>
+    </div>
   </body>
   <script src="authentication.js" type="module"></script>
   <script src="registration.js" type="module"></script>
