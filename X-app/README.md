@@ -2,22 +2,43 @@
 
 Recreating the basic X app.
 
-# What features
+## What features
 
 - Login / sign up page
 - Account and sessions
 - Post with likes and unliking
-- A post should show the test and account
+- Only the creator can delete the post.
 - Passkeys login and sign up
 
-# Stack / tools used
+## Screen shots
+
+Authentication page
+<br> ![auth page](./src/screenshots/auth-page.png)
+
+Passkeys
+<br> ![passkeys](./src/screenshots/passkeys.png)
+
+Home page
+<br> ![auth page](./src/screenshots/home-1.png)
+![auth page](./src/screenshots/home-2.png)
+
+## Requirements
+
+- Install deno run `irm https://deno.land/install.ps1` | iex (for windows)
+
+## How to run
+
+- run `deno task start`
+- Open browser enter this `http://localhost:8000/`
+
+## Stack / tools used
 
 - sqlite database
 - HTMX
 - Deno
 - JS
 
-# Project structure
+## Project structure
 
 ```txt
 ├── deno.json
@@ -63,12 +84,21 @@ Recreating the basic X app.
     │
     ├── helper-functions
     │   ├── json-response.js   
-    │   └── html-response.js
+    │   ├── html-response.js
+    │   └── get-time.js
     │
     ├── public
     │   ├── authentication.js
     │   ├── registration.js        
-    │   └── index.html
+    │   ├── index.html
+    │   │
+    │   └── assets     
+    │       └── profile-pic.png
+    │ 
+    ├── view
+    │   ├── likes.js
+    │   ├── list.js   
+    │   └── post-template.js
     │
     ├── routes
     │   └── table.js
@@ -76,34 +106,45 @@ Recreating the basic X app.
     └── view
 ```
 
-# Notes for Devlopment
+## Key logic
 
-- The public key is not read right propbaly beacuase I am not sending it in the
-  right format
-- I need to uses generateAuthenticationOptions for login in
+**Common flow**
 
-## Other Note
+- HTMX request → server routing → handler → database → HTML response.
 
-- I will need to chagne the branch from master to main at some point when I
-  commit it
+**authentication and registration**
 
-# What I still need to do
+- User enters username and presses login
+- Server checks if account exists in database
+- If valid, authentication step begins
+- User enters PIN
+- Credentials are verified
+- On success, user is logged in and a new session is created
 
-- Have a quick learning session about what I can take away from it
-- And look what docments I can use next time how would I do it next time
-- update the readme
-- commit
+**new post**
 
-# I don't really understand the promblem
+- User enters post content
+- Post is created and stored in the database
+- Post includes username, content, and likes
+- New post is added to the UI post list
 
-- So thing are getting passed in the wrong format.
-- So I should try and understad what need to get passed
-- And in what format
-- Then I need to get thoose things
+**like post**
 
-## Notes
+- User presses like on a post
+- Server finds post by ID in database
+- Like count is incremented by one
+- New value and unlike button return to UI
 
-- Try and copy the UI exactly
-- Have passkeys / login (not with a password)
-- At some point I want to add in a feature that checks if there is a session if
-  not it moves you to the login page
+**delete post**
+
+- Delete button is only visible to the post creator
+- User presses delete
+- Post is located and removed from the database
+- Post HTML is removed from the UI
+
+## known promblems
+
+- Likes aren’t tied to accounts, so refreshing allows repeated likes.
+- passkeys take a long time
+- Lacks a lot of features
+- for you and following are just looks not function

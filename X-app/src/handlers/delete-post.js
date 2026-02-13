@@ -12,7 +12,7 @@ const deletePost = (ctx) => {
 
   // Deletes the post from the database
   dbDeletePost(postId);
-  const html = /*html*/ ``; // Is this cause I promblem?
+  const html = /*html*/ ``;
   return htmlResponse(html, { status: 200 });
 };
 export default deletePost;
