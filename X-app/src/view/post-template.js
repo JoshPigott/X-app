@@ -1,5 +1,6 @@
 import getTime from "../helper-functions/get-time.js";
 import { dbIsUsersPost } from "../data-base/posts.js";
+import escapeHtml from "../helper-functions/escape-html.js";
 
 function getPostTemplate(post, req) {
   // Checks whether the current user created the post, ensuring only the creator can delete it.
@@ -10,9 +11,9 @@ function getPostTemplate(post, req) {
   <article class="post" id=${post.id}>
     <div>
       <img class="post__profile-pic" src="assets/profile-pic.png" alt="profile picture">
-      ${post.username} ${getTime(post.time)}
+      ${escapeHtml(post.username)} ${getTime(post.time)}
     </div>
-    <pre class="text">${post.content}</pre>
+    <pre class="text">${escapeHtml(post.content)}</pre>
   
     <div class="post__buttons">
       <div class="post__likes">
