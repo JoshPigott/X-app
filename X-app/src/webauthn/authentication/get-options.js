@@ -1,5 +1,5 @@
 import { generateAuthenticationOptions } from "authModule";
-import { getCredentialIds } from "../../data-base/passkeys.js";
+// import { getCredentialIds } from "../../data-base/passkeys.js";
 import {
   storeAccount,
   storeAuthChallenge,
@@ -10,12 +10,12 @@ import json from "../../helper-functions/json-response.js";
 const getOptions = async (username, acountId) => {
   storeAccount(username, acountId, false);
 
-  const credentials = getCredentialIds(acountId);
+  // const credentials = getCredentialIds(acountId);
 
   // info need to set up a passkey for current user
   const options = await generateAuthenticationOptions({
     rpID: "localhost",
-    allowCredentials: credentials,
+    allowCredentials: [], // If I uses credentials it will not work
     userVerification: "preferred",
   });
 

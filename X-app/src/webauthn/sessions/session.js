@@ -21,9 +21,12 @@ function getCookies(req) {
 }
 
 // gets data from cookie
-function getSessions(req) {
+export function getSessions(req) {
   const cookies = getCookies(req);
-  const sessionId = cookies.sessionId;
+  const sessionId = cookies?.sessionId;
+  if (!sessionId){
+    return false;
+  }
   const data = sessions.get(sessionId);
   return data;
 }
