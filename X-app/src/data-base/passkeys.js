@@ -44,6 +44,7 @@ export function addPasskey(
 
 // returns a passkey credentials containing id, publickey, counter and transports from the database
 export function getCredentials(credentialId) {
+  console.log("credentialId:", credentialId);
   const db = new DB("src/data/database.db");
   const [[publicKey, counter, transportsType]] = db.query(
     "SELECT publicKey, counter, transportsType FROM passkeys WHERE credentialId=?",

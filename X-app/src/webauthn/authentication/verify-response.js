@@ -1,27 +1,23 @@
 import { verifyAuthenticationResponse } from "authModule";
-import {
-  getAccount,
-  getAuthChallenge,
-} from "../../data-base/account-challenge.js";
-
+import { getAuthChallenge } from "../../data-base/account-challenge.js";
 import { getCredentials, updateCounter } from "../../data-base/passkeys.js";
-import { createSession } from "../sessions/session.js";
+import { updateSession } from "../sessions/session.js";
 
 import json from "../../helper-functions/json-response.js";
 
-const getVerification = async (body) => {
+const getVerification = async (body, sessionId) => {
   console.log("authentication verification has started");
 
-  const account = getAccount();
-  // Gets challenge that was sent
-  const authChallenge = getAuthChallenge();
+  // Gets account and challenge
+  const auth = getAuthChallenge(sessionId);
 
   const credentialId = body.id;
+
   const { id, publicKey, counter, transports } = getCredentials(credentialId);
 
   const verification = await verifyAuthenticationResponse({
     response: body,
-    expectedChallenge: authChallenge,
+    expectedChallenge: auth.challenge,
     expectedOrigin: "http://localhost:8000",
     expectedRPID: "localhost",
     credential: {
@@ -37,8 +33,7 @@ const getVerification = async (body) => {
     // Adds one the counter
     updateCounter(id);
 
-    const sessionId = createSession(account.id, account.username);
-    console.log("sessionId:", sessionId);
+    updateSession(sessionId, auth.account.id, auth.account.username);
 
     return json({ "verified": true }, {
       status: 200,

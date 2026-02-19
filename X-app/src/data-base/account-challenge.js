@@ -1,19 +1,13 @@
 // used for storing authChallenge and account need for verification of passkey
-let authChallenge;
-let account;
+const challenges = new Map();
 
-export function storeAccount(username, id, newAccount) {
-  account = { "username": username, "id": id, "new": newAccount };
+// The promblem is challenge
+export function storeAuthChallenge(tempId, account, challenge) {
+  challenges.set(tempId, { account, challenge });
+  // Makes sure challegnes don't build up, get deleted after 5 mintues
+  setTimeout(() => (challenges.delete(tempId)), 5 * 60 * 1000);
 }
 
-export function storeAuthChallenge(challenge) {
-  authChallenge = challenge;
-}
-
-export function getAuthChallenge() {
-  return authChallenge;
-}
-
-export function getAccount() {
-  return account;
+export function getAuthChallenge(tempId) {
+  return challenges.get(tempId);
 }

@@ -11,7 +11,7 @@ const post = async (ctx) => {
   const randomString = crypto.randomUUID();
   // Allows the post id to used as css selctor as it starts with a letter and not a number
   const postId = `post-${randomString}`;
-  console.log("post id", postId);
+  console.log("post id:", postId);
 
   // From session data
   const username = dbGetUsername(ctx.req);

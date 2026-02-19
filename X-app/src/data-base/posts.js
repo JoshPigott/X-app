@@ -26,8 +26,6 @@ export function dbIsUsersPost(postId, req) {
     [postUserId] = row;
   }
 
-  console.log("postId:", postId);
-
   const currentUserId = getId(req);
 
   // return if it their post or not
