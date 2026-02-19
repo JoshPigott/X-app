@@ -44,6 +44,7 @@ export function addPasskey(
 
 // returns a passkey credentials containing id, publickey, counter and transports from the database
 export function getCredentials(credentialId) {
+  console.log("credentialId:", credentialId);
   const db = new DB("src/data/database.db");
   const [[publicKey, counter, transportsType]] = db.query(
     "SELECT publicKey, counter, transportsType FROM passkeys WHERE credentialId=?",
@@ -60,17 +61,11 @@ export function getCredentials(credentialId) {
   };
 }
 
-// Increases the counter of a passkey by one after it is used
-export function updateCounter(credentialId) {
+// Makes sure counter on device and server are the same
+export function updateCounter(credentialId, newCounter) {
   const db = new DB("src/data/database.db");
-  let [[counter]] = db.query(
-    "SELECT counter FROM passkeys WHERE credentialId=?",
-    [credentialId],
-  );
-  // The passkey has been used
-  counter += 1;
   db.query("UPDATE passkeys set counter=? WHERE credentialId=?", [
-    counter,
+    newCounter,
     credentialId,
   ]);
   db.close();

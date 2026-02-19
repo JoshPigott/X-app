@@ -1,7 +1,7 @@
 import { serveFile } from "serveFileModule";
 import { dirname, join } from "pathModule";
 import { fromFileUrl } from "fromFileUrlModule";
-import { getSessions } from "./webauthn/sessions/session.js"
+import { getLoginStatus } from "./webauthn/sessions/session.js";
 import setupDatabase from "./data-base/table.js";
 import compiledRouter from "./routes/table.js";
 import json from "./helper-functions/json-response.js";
@@ -12,16 +12,16 @@ setupDatabase();
 // middleware
 
 // Check if login or not with a session
-export function requireAuth(handler){
+export function requireAuth(handler) {
   return (ctx) => {
-    const session = getSessions(ctx.req);
-    if (!session){
+    const loginStatus = getLoginStatus(ctx.req);
+    if (loginStatus === false) {
       console.log("Unauthorised request");
-      return new Response("Unauthorised", {status: 401});
+      return new Response("Unauthorised", { status: 401 });
     }
     return handler(ctx);
-  }
-} 
+  };
+}
 
 async function isStaticFile(filePath) {
   try {
