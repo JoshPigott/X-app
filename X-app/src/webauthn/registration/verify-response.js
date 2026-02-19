@@ -20,19 +20,23 @@ function addUserAndPasskey(verification, sessionId, account) {
   return sessionId;
 }
 
-// Checks the signed challenge
-const getVerification = async (body, sessionId) => {
-  console.log("registration verification has started");
-
-  // Gets challenge that was sent and account
-  const auth = getAuthChallenge(sessionId);
-
+async function getVerification(body, auth) {
   const verification = await verifyRegistrationResponse({
     response: body,
     expectedChallenge: auth.challenge,
     expectedOrigin: "http://localhost:8000",
     expectedRPID: "localhost",
   });
+  return verification;
+}
+
+// Checks the signed challenge
+const isVerified = async (body, sessionId) => {
+  console.log("registration verification has started");
+
+  // Gets challenge that was sent and account
+  const auth = getAuthChallenge(sessionId);
+  const verification = await getVerification(body, auth);
 
   // The passkey and registration was valid
   if (verification.verified) {
@@ -45,4 +49,4 @@ const getVerification = async (body, sessionId) => {
   // The passkey was invalid
   return json({ verified: verification.verified }, { status: 400 });
 };
-export default getVerification;
+export default isVerified;

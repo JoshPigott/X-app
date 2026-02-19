@@ -1,6 +1,6 @@
 import { dbGetId } from "../data-base/users.js";
 import createOptions from "../webauthn/registration/create-options.js";
-import verifyResponse from "../webauthn/registration/verify-response.js";
+import isVerified from "../webauthn/registration/verify-response.js";
 import { createSession, getSession } from "../webauthn/sessions/session.js";
 import { storeAuthChallenge } from "../data-base/account-challenge.js";
 import json from "../helper-functions/json-response.js";
@@ -40,5 +40,5 @@ export async function registerStart(ctx) {
 export async function regVerify(ctx) {
   const sessionId = getSession(ctx.req);
   const body = await ctx.req.json();
-  return await verifyResponse(body, sessionId);
+  return await isVerified(body, sessionId);
 }

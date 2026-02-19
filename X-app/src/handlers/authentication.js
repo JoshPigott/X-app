@@ -1,6 +1,6 @@
 import { dbGetId } from "../data-base/users.js";
 import getOptions from "../webauthn/authentication/get-options.js";
-import getVerification from "../webauthn/authentication/verify-response.js";
+import isVerified from "../webauthn/authentication/verify-response.js";
 import { createSession, getSession } from "../webauthn/sessions/session.js";
 import { storeAuthChallenge } from "../data-base/account-challenge.js";
 import json from "../helper-functions/json-response.js";
@@ -38,5 +38,5 @@ export async function authenticateStart(ctx) {
 export async function authVerify(ctx) {
   const sessionId = getSession(ctx.req);
   const body = await ctx.req.json();
-  return await getVerification(body, sessionId);
+  return await isVerified(body, sessionId);
 }

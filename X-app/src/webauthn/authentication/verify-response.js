@@ -5,14 +5,8 @@ import { updateSession } from "../sessions/session.js";
 
 import json from "../../helper-functions/json-response.js";
 
-const getVerification = async (body, sessionId) => {
-  console.log("authentication verification has started");
-
-  // Gets account and challenge
-  const auth = getAuthChallenge(sessionId);
-
+async function getVerification(body, auth) {
   const credentialId = body.id;
-
   const { id, publicKey, counter, transports } = getCredentials(credentialId);
 
   const verification = await verifyAuthenticationResponse({
@@ -28,11 +22,22 @@ const getVerification = async (body, sessionId) => {
     },
   });
 
+  if (verification.verified) {
+    updateCounter(id, verification.authenticationInfo.newCounter);
+  }
+
+  return verification;
+}
+
+const isVerified = async (body, sessionId) => {
+  console.log("authentication verification has started");
+
+  // Gets account and challenge
+  const auth = getAuthChallenge(sessionId);
+  const verification = await getVerification(body, auth);
+
   // The passkey and registration was valid
   if (verification.verified) {
-    // Adds one the counter
-    updateCounter(id);
-
     updateSession(sessionId, auth.account.id, auth.account.username);
 
     return json({ "verified": true }, {
@@ -43,4 +48,4 @@ const getVerification = async (body, sessionId) => {
   // The passkey was invalid
   return json({ verified: verification.verified }, { status: 400 });
 };
-export default getVerification;
+export default isVerified;
