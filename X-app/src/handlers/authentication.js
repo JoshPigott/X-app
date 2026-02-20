@@ -30,7 +30,9 @@ export async function authenticateStart(ctx) {
 
   return await json(options, {
     status: 200,
-    headers: { "Set-Cookie": `sessionId=${sessionId}; HttpOnly; Path=/` },
+    headers: {
+      "Set-Cookie": `sessionId=${sessionId}; HttpOnly; SameSite=Strict; Path=/`,
+    },
   });
 }
 

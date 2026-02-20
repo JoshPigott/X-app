@@ -43,7 +43,10 @@ const isVerified = async (body, sessionId) => {
     addUserAndPasskey(verification, sessionId, auth.account);
     return json({ "verified": true }, {
       status: 200,
-      headers: { "Set-Cookie": `sessionId=${sessionId}; HttpOnly; Path=/` },
+      headers: {
+        "Set-Cookie":
+          `sessionId=${sessionId}; HttpOnly; SameSite=Strict; Path=/`,
+      },
     });
   }
   // The passkey was invalid

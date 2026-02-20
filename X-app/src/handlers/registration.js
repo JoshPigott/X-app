@@ -32,7 +32,9 @@ export async function registerStart(ctx) {
 
   return json(options, {
     status: 200,
-    headers: { "Set-Cookie": `sessionId=${sessionId}; HttpOnly; Path=/` },
+    headers: {
+      "Set-Cookie": `sessionId=${sessionId}; HttpOnly; SameSite=Strict; Path=/`,
+    },
   });
 }
 

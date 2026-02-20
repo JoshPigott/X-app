@@ -53,7 +53,8 @@ async function serveStaticFiles(req, pathname) {
 // If pathname not found returns pathname with an error
 function notFound(pathname) {
   console.log(`${pathname} was not found`);
-  return json({ error: `${pathname} was not found` }, { status: 404 });
+  // Is this too spefic
+  return json({ error: `Resource not found` }, { status: 404 });
 }
 
 // Finds the right handler/fucnation to get correct Response
@@ -90,7 +91,7 @@ async function safeServer(req) {
     return await server(req);
   } catch (err) {
     console.log(`There is an error of ${err}`);
-    return json(`${err}`, { status: 400 });
+    return json({ error: `Somthing went wrong` }, { status: 500 });
   }
 }
 // Starts server
