@@ -1,43 +1,35 @@
-// Updates like in database adding or removing
-import { DB } from "sqliteModule";
+import db from "./set-up.js";
 
+// Creates a "likes" table for a specific post
 export function dbCreateLikeTable(postId) {
-  const db = new DB("src/data/database.db");
   db.execute(`CREATE TABLE IF NOT EXISTS "likes-${postId}" (userId)`);
-  db.close();
 }
 
+// Removes "likes" table
 export function dbDeleteLikeTable(postId) {
-  const db = new DB("src/data/database.db");
   db.execute(`DROP TABLE IF EXISTS "likes-${postId}"`);
-  db.close();
 }
 
+// Get number of likes on a post
 export function dbGetLikeNumber(postId) {
-  const db = new DB("src/data/database.db");
   const [[likes]] = db.query("SELECT likes FROM posts WHERE id=?", [postId]);
-  db.close();
   return likes;
 }
 
+// Adds a like to the post and tracks the users like
 export function dbAddLike(postId, userId) {
-  const db = new DB("src/data/database.db");
-  // Tracks that user like post
   db.query(`INSERT into "likes-${postId}" (userId) VALUES(?)`, [userId]);
   db.query("UPDATE posts set likes = likes + 1 WHERE id=?", [postId]);
-  db.close();
 }
 
+// Remove user's like from post and like tracking
 export function dbRemoveLike(postId) {
-  const db = new DB("src/data/database.db");
-  // Tracks that user like post
   db.query(`DELETE FROM "likes-${postId}" WHERE userId=?`, [userId]);
   db.query("UPDATE posts set likes = likes - 1 WHERE id=?", [postId]);
-  db.close();
 }
 
+// Checks to if the user has like a specific post
 export function getHasLiked(postId, userId) {
-  const db = new DB("src/data/database.db");
   const [user] = db.query(
     `SELECT userId FROM "likes-${postId}" WHERE userId=?`,
     [userId],
