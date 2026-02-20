@@ -1,6 +1,7 @@
 import { dbNewPost } from "../data-base/posts.js";
 import htmlResponse from "../helper-functions/html-response.js";
-import { dbGetUsername, getId } from "../webauthn/sessions/session.js";
+import { getId, getUsername } from "../webauthn/sessions/session.js";
+import { dbCreateLikeTable } from "../data-base/likes.js";
 import getPostTemplate from "../view/post-template.js";
 
 // Creates a new post with content the user has entered in
@@ -14,11 +15,13 @@ const post = async (ctx) => {
   console.log("post id:", postId);
 
   // From session data
-  const username = dbGetUsername(ctx.req);
+  const username = getUsername(ctx.req);
   const userId = getId(ctx.req);
 
   const time = Date.now();
   await dbNewPost(postId, userId, username, content, time);
+  // Start tracking like on posts
+  dbCreateLikeTable(postId);
   const postdata = { id: postId, username, content, likes: 0, time };
   // Adds the post
   const html = await getPostTemplate(postdata, ctx.req);
