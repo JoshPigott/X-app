@@ -39,7 +39,7 @@ function getData(sessionId) {
 }
 
 // gets username from the session
-export function dbGetUsername(req) {
+export function getUsername(req) {
   const sessionId = getSession(req);
   const data = getData(sessionId);
   return data.username;
