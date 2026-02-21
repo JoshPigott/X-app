@@ -1,8 +1,8 @@
 import {
   dbAddLike,
+  dbGetHasLiked,
   dbGetLikeNumber,
   dbRemoveLike,
-  getHasLiked,
 } from "../data-base/likes.js";
 import { getId } from "../webauthn/sessions/session.js";
 import { likeTemplate, unlikeTemplate } from "../view/likes.js";
@@ -12,7 +12,7 @@ import htmlResponse from "../helper-functions/html-response.js";
 export function like(ctx) {
   const postId = ctx.params.id;
   const userId = getId(ctx.req);
-  const hasLiked = getHasLiked(postId, userId);
+  const hasLiked = dbGetHasLiked(postId, userId);
 
   // Makes sure the user can't like the post multiple times
   if (hasLiked === false) {
@@ -28,7 +28,7 @@ export function like(ctx) {
 export function unlike(ctx) {
   const postId = ctx.params.id;
   const userId = getId(ctx.req);
-  const hasLiked = getHasLiked(postId, userId);
+  const hasLiked = dbGetHasLiked(postId, userId);
 
   // Makes sure the user can't unlike the post multiple times
   if (hasLiked === false) {

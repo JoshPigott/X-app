@@ -1,16 +1,33 @@
-// Allows you do get the session Id later on
-const sessions = new Map();
+import {
+  dbCreateSession,
+  dbDeleteSession,
+  dbGetLoginStatus,
+  dbGetuserId,
+  dbGetusername,
+  dbIsValidSession,
+  dbUpdateSession,
+} from "../../data-base/sessions.js";
 
 // Makes new session and stores it
 export function createSession() {
   const sessionId = crypto.randomUUID();
-  sessions.set(sessionId, { login: false });
+  dbCreateSession(sessionId, false);
+
+  // Deletes session after 2 hours to clear memory
+  try {
+    setTimeout(() => {
+      console.log("The session has been deleted");
+      dbDeleteSession(sessionId);
+    }, 2 * 60 * 60 * 1000); 
+  } catch (_err) {
+    // The session was already deleted
+  }
   return sessionId;
 }
 
 // Updates the session
 export function updateSession(sessionId, id, username) {
-  sessions.set(sessionId, { id: id, username: username, login: true });
+  dbUpdateSession(sessionId, true, id, username);
 }
 
 // Gets cookies from a request as an object
@@ -25,39 +42,39 @@ function getCookies(req) {
   return Object.fromEntries(keyValueCookies);
 }
 
-// gets data from cookie
+// Gets sessionId from cookies
 export function getSession(req) {
   const cookies = getCookies(req);
   const sessionId = cookies?.sessionId;
   return sessionId;
 }
 
-// Get the data from the session
-function getData(sessionId) {
-  const data = sessions.get(sessionId);
-  return data;
-}
-
-// gets username from the session
+// Gets username from the session
 export function getUsername(req) {
   const sessionId = getSession(req);
-  const data = getData(sessionId);
-  return data.username;
+  const username = dbGetusername(sessionId);
+  return username;
 }
 
-// gets the id from the session
+// Gets the id from the session
 export function getId(req) {
   const sessionId = getSession(req);
-  const data = getData(sessionId);
-  return data.id;
+  const userId = dbGetuserId(sessionId);
+  return userId;
 }
 
-// returns if user is login or not
+// Returns if user is login or not
 export function getLoginStatus(req) {
   const sessionId = getSession(req);
+  // Checks if session was sent
   if (!sessionId) {
     return false;
   }
-  const data = getData(sessionId);
-  return data.login;
+  // Check if sessiondId is valid
+  if (dbIsValidSession(sessionId) === false) {
+    return false;
+  }
+  // Check session login status
+  const loginStatus = dbGetLoginStatus(sessionId);
+  return loginStatus;
 }

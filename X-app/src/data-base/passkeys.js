@@ -3,7 +3,7 @@ import db from "./set-up.js";
 // Note: transports = [transportsType], transportsType = "internal" (often),  as an array can't be stored in the database
 
 // returns passkey ID credentials in the format of [{id:id, transport: transport}] from database
-export function getCredentialIds(userId) {
+export function dbGetCredentialIds(userId) {
   const credentials = db.query(
     "SELECT credentialId, transportsType FROM passkeys WHERE userId=?",
     [userId],
@@ -24,7 +24,7 @@ export function getCredentialIds(userId) {
 }
 
 // Adds a passkey to the database
-export function addPasskey(
+export function dbAddPasskey(
   userId,
   credentialId,
   publicKey,
@@ -39,7 +39,7 @@ export function addPasskey(
 }
 
 // returns a passkey credentials containing id, publickey, counter and transports from the database
-export function getCredentials(credentialId) {
+export function dbGetCredentials(credentialId) {
   const [[publicKey, counter, transportsType]] = db.query(
     "SELECT publicKey, counter, transportsType FROM passkeys WHERE credentialId=?",
     [credentialId],
@@ -56,7 +56,7 @@ export function getCredentials(credentialId) {
 }
 
 // Makes sure counter on device and server are the same
-export function updateCounter(credentialId, newCounter) {
+export function dbUpdateCounter(credentialId, newCounter) {
   db.query("UPDATE passkeys set counter=? WHERE credentialId=?", [
     newCounter,
     credentialId,

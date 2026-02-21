@@ -18,5 +18,10 @@ const setupDatabase = () => {
     publicKey BLOB NOT NULL, counter INTGER NOT NULL,
     transportsType TEXT NOT NULL, 
     PRIMARY KEY(userId, credentialId))`);
+
+  // Session table
+  db.execute(`CREATE TABLE IF NOT EXISTS sessions
+    (sessionId TEXT PRIMARY KEY NOT NULL, loginStatus TEXT,
+    userId TEXT, username TEXT)`);
 };
 export default setupDatabase;

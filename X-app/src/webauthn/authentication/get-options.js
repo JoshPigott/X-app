@@ -2,7 +2,7 @@ import { generateAuthenticationOptions } from "authModule";
 
 // Gets the current account's info to make a passkey
 const getOptions = async () => {
-  // const credentials = getCredentialIds(acountId);
+  // const credentials = dbGetCredentialIds(acountId);
 
   // info need to set up a passkey for current user
   const options = await generateAuthenticationOptions({

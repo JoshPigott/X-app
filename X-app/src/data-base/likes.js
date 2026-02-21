@@ -29,7 +29,7 @@ export function dbRemoveLike(postId) {
 }
 
 // Checks to if the user has like a specific post
-export function getHasLiked(postId, userId) {
+export function dbGetHasLiked(postId, userId) {
   const [user] = db.query(
     `SELECT userId FROM "likes-${postId}" WHERE userId=?`,
     [userId],

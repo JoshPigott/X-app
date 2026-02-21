@@ -6,6 +6,7 @@ import setupDatabase from "./data-base/table.js";
 import compiledRouter from "./routes/table.js";
 import json from "./helper-functions/json-response.js";
 
+
 // setups data base
 setupDatabase();
 
