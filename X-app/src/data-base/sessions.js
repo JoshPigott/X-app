@@ -52,7 +52,3 @@ export function dbGetuserId(sessionId) {
   ]);
   return userId;
 }
-
-export function dbGetAllSessions() {
-  console.log("sessions:", db.query("SELECT * FROM sessions"));
-}
