@@ -3,6 +3,7 @@
 // Imports all the handler
 import { registerStart, regVerify } from "../handlers/registration.js";
 import { authenticateStart, authVerify } from "../handlers/authentication.js";
+import isLogin from "../handlers/is-login.js"
 
 import post from "../handlers/post.js";
 import { like, unlike } from "../handlers/like-unlike.js";
@@ -13,6 +14,7 @@ import { requireAuth } from "../server.js"
 
 // Links methods, pathnames and handler together
 const tableRouter = [
+  { method: "GET",    path: "/is-login",                  handler: isLogin},
   { method: "POST",   path: "/register/start",            handler: registerStart },
   { method: "POST",   path: "/authenticate/start",        handler: authenticateStart },
   { method: "POST",   path: "/register/verification",     handler: regVerify },

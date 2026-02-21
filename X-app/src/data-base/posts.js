@@ -4,7 +4,7 @@ import { getId } from "../webauthn/sessions/session.js";
 // Adds a new post to the data base
 export function dbNewPost(postId, userId, username, context, time) {
   db.query(
-    "INSERT INTO posts (id, userId, username, content, likes, time) values(?, ?, ?, ?, 0, ?)",
+    "INSERT INTO posts (id, userId, username, content, likes, time) VALUES(?, ?, ?, ?, 0, ?)",
     [postId, userId, username, context, time],
   );
 }

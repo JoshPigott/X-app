@@ -2,7 +2,7 @@ import getTime from "../helper-functions/get-time.js";
 import { dbIsUsersPost } from "../data-base/posts.js";
 import { getId } from "../webauthn/sessions/session.js";
 import escapeHtml from "../helper-functions/escape-html.js";
-import { dbGetLikeNumber, getHasLiked } from "../data-base/likes.js";
+import { dbGetHasLiked, dbGetLikeNumber } from "../data-base/likes.js";
 
 import { likeTemplate, unlikeTemplate } from "../view/likes.js";
 
@@ -10,7 +10,7 @@ function getPostTemplate(post, req) {
   // Checks whether the current user created the post, ensuring only the creator can delete it.
   const isUserPost = dbIsUsersPost(post.id, req);
   const userId = getId(req);
-  const hasLiked = getHasLiked(post.id, userId);
+  const hasLiked = dbGetHasLiked(post.id, userId);
   const postLikes = dbGetLikeNumber(post.id);
 
   // Returns a post with the account, content, like button, and maybe delete button.

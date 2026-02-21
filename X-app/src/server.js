@@ -6,6 +6,8 @@ import setupDatabase from "./data-base/table.js";
 import compiledRouter from "./routes/table.js";
 import json from "./helper-functions/json-response.js";
 
+import { dbGetAllSessions } from "./data-base/sessions.js";
+
 // setups data base
 setupDatabase();
 
@@ -14,6 +16,7 @@ setupDatabase();
 // Check if login or not with a session
 export function requireAuth(handler) {
   return (ctx) => {
+    dbGetAllSessions();
     const loginStatus = getLoginStatus(ctx.req);
     if (loginStatus === false) {
       console.log("Unauthorised request");

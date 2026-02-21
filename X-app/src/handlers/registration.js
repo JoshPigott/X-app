@@ -2,7 +2,7 @@ import { dbGetId } from "../data-base/users.js";
 import createOptions from "../webauthn/registration/create-options.js";
 import isVerified from "../webauthn/registration/verify-response.js";
 import { createSession, getSession } from "../webauthn/sessions/session.js";
-import { storeAuthChallenge } from "../data-base/account-challenge.js";
+import { dbStoreAuthChallenge } from "../data-base/account-challenge.js";
 import json from "../helper-functions/json-response.js";
 
 // Starts the process of getting login options
@@ -28,7 +28,7 @@ export async function registerStart(ctx) {
   console.log("registration options are done!");
 
   // saves the challenge and account so it can accessed at verification
-  storeAuthChallenge(sessionId, account, options.challenge);
+  dbStoreAuthChallenge(sessionId, account, options.challenge);
 
   return json(options, {
     status: 200,

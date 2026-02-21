@@ -1,6 +1,6 @@
 import { verifyRegistrationResponse } from "authModule";
-import { getAuthChallenge } from "../../data-base/account-challenge.js";
-import { addPasskey } from "../../data-base/passkeys.js";
+import { dbGetAuthChallenge } from "../../data-base/account-challenge.js";
+import { dbAddPasskey } from "../../data-base/passkeys.js";
 import { dbAddUser } from "../../data-base/users.js";
 import { updateSession } from "../sessions/session.js";
 import json from "../../helper-functions/json-response.js";
@@ -13,7 +13,7 @@ function addUserAndPasskey(verification, sessionId, account) {
   const counter = verification.registrationInfo.credential.counter;
   const transports = verification.registrationInfo.credential.transports;
 
-  addPasskey(account.id, credentialId, publicKey, counter, transports);
+  dbAddPasskey(account.id, credentialId, publicKey, counter, transports);
 
   dbAddUser(account.id, account.username);
   updateSession(sessionId, account.id, account.username);
@@ -35,7 +35,7 @@ const isVerified = async (body, sessionId) => {
   console.log("registration verification has started");
 
   // Gets challenge that was sent and account
-  const auth = getAuthChallenge(sessionId);
+  const auth = dbGetAuthChallenge(sessionId);
   const verification = await getVerification(body, auth);
 
   // The passkey and registration was valid
