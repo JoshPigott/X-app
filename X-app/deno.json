@@ -10,7 +10,7 @@
   },
 
   "tasks": {
-    "start": "deno run --allow-net --allow-read --allow-write src/server.js",
+    "start": "deno run --allow-net --allow-read --allow-write --allow-env --env-file=.env src/server.js",
     "debug": "deno run --inspect-brk --allow-net --allow-read --allow-write src/server.js"
   }
 }

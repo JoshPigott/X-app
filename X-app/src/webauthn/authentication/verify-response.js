@@ -6,14 +6,16 @@ import { updateSession } from "../sessions/session.js";
 import json from "../../helper-functions/json-response.js";
 
 async function getVerification(body, auth) {
+  const ORIGIN = Deno.env.get("ORIGIN") || "http://localhost:8000";
+  const RP_ID = Deno.env.get("RP_ID") || "localhost";
   const credentialId = body.id;
   const { id, publicKey, counter, transports } = dbGetCredentials(credentialId);
 
   const verification = await verifyAuthenticationResponse({
     response: body,
     expectedChallenge: auth.challenge,
-    expectedOrigin: "http://localhost:8000",
-    expectedRPID: "localhost",
+    expectedOrigin: ORIGIN,
+    expectedRPID: RP_ID,
     credential: {
       id: id,
       publicKey: publicKey,

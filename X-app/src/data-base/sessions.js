@@ -17,7 +17,7 @@ export function dbUpdateSession(sessionId, loginStatus, userId, username) {
 export function dbDeleteSession(sessionId) {
   try {
     db.query("DELETE FROM sessions WHERE sessionId=?", [sessionId]);
-    console.log("A session as just deleted");
+    console.log("A session was just deleted");
   } catch (_err) {
     // Session was already deleted
   }
