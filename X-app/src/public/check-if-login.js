@@ -1,5 +1,6 @@
-// Sends request every 10 seounds
-setInterval(checkIfLogin, 10 * 1000);
+// Sends request every 10 seconds
+const TEN_SECONDS = 10 * 1000;
+setInterval(checkIfLogin, TEN_SECONDS);
 
 // Run right at the start
 checkIfLogin();

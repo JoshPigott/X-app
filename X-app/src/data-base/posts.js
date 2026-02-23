@@ -34,9 +34,19 @@ export function dbDeletePost(postId) {
 }
 
 // Gets all the posts in the database
-export function dbGetPosts() {
+export function dbGetPosts(cursor) {
+  // Okay I need to add pagination
   const posts = [];
-  const rows = db.query("SELECT id, username, content, likes, time FROM posts");
+  const rows = db.query(
+    `SELECT id, username, content, likes,
+     time FROM posts WHERE time < ? ORDER BY time DESC LIMIT 3`,
+    [cursor],
+  );
+
+  if (rows.length === 0) {
+    return {};
+  }
+  cursor = rows[rows.length - 1][4];
 
   rows.forEach((row) => {
     const id = row[0];
@@ -55,5 +65,5 @@ export function dbGetPosts() {
     posts.push(post);
   });
 
-  return posts;
+  return { posts, cursor };
 }

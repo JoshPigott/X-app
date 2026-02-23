@@ -31,7 +31,7 @@ export function unlike(ctx) {
   const hasLiked = dbGetHasLiked(postId, userId);
 
   // Makes sure the user can't unlike the post multiple times
-  if (hasLiked === false) {
+  if (hasLiked === true) {
     dbRemoveLike(postId, userId);
   }
   const likeNum = dbGetLikeNumber(postId);

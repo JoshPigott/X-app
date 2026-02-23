@@ -36,7 +36,7 @@
               type="sumbit"
               hx-post="/post"
               hx-target=".posts__container"
-              hx-swap="beforeend"
+              hx-swap="afterbegin"
               hx-on::after-request="document.querySelector('form').reset();"
             >
               Post
@@ -44,7 +44,16 @@
           </form>
         </div>
 
-        <div class="posts__container" hx-get="/posts" hx-trigger="load"></div>
+        <div class="posts__container" hx-trigger="load">
+          <!--If this is showing on the page it will request more posts-->
+          <!--I can't set a value of Infinity so I am using 10000000000000-->
+          <div
+            hx-get="/posts?cursor=10000000000000"
+            hx-trigger="revealed"
+            hx-swap="outerHTML"
+          >
+          </div>
+        </div>
       </section>
       <section class="explore">
         <!--No features will get added here-->

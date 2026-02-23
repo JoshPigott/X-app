@@ -1,6 +1,7 @@
 import {
   dbCreateSession,
   dbDeleteSession,
+  dbGetAllsessions,
   dbGetLoginStatus,
   dbGetuserId,
   dbGetusername,
@@ -10,18 +11,17 @@ import {
 
 // Makes new session and stores it
 export function createSession() {
+  const TWO_HOURS = 2 * 60 * 60 * 1000;
+  const currTime = Date.now();
+  const expiryTime = currTime + TWO_HOURS;
   const sessionId = crypto.randomUUID();
-  dbCreateSession(sessionId, false);
+  dbCreateSession(sessionId, false, expiryTime);
 
   // Deletes session after 2 hours to clear memory
-  try {
-    setTimeout(() => {
-      console.log("The session has been deleted");
-      dbDeleteSession(sessionId);
-    }, 2 * 60 * 60 * 1000); 
-  } catch (_err) {
-    // The session was already deleted
-  }
+  setTimeout(() => {
+    dbDeleteSession(sessionId);
+    console.log("The session has been deleted");
+  }, TWO_HOURS);
   return sessionId;
 }
 
@@ -70,11 +70,38 @@ export function getLoginStatus(req) {
   if (!sessionId) {
     return false;
   }
+
   // Check if sessiondId is valid
-  if (dbIsValidSession(sessionId) === false) {
+  const session = dbIsValidSession(sessionId);
+  if (session === undefined) {
     return false;
   }
+
   // Check session login status
   const loginStatus = dbGetLoginStatus(sessionId);
   return loginStatus;
+}
+
+// Deletes all invalid sessions
+export function checkExpiryTimes() {
+  const currTime = Date.now();
+  const sessionIdIndex = 0;
+  const expiryTimeIndex = 4;
+
+  const sessions = dbGetAllsessions();
+  sessions?.forEach((session) => {
+    const sessionId = session[sessionIdIndex];
+    const expiryTime = session[expiryTimeIndex];
+    const timeLeft = expiryTime - currTime;
+
+    // Session has been expired
+    if (currTime > expiryTime) {
+      dbDeleteSession(sessionId);
+    } // Sets deletion time for session
+    else {
+      setTimeout(() => {
+        dbDeleteSession(sessionId);
+      }, timeLeft);
+    }
+  });
 }
