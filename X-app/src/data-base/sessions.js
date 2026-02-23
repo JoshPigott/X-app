@@ -1,9 +1,9 @@
 import db from "./set-up.js";
 
-export function dbCreateSession(sessionId, loginStatus) {
+export function dbCreateSession(sessionId, loginStatus, expiryTime) {
   db.query(
-    "INSERT into sessions (sessionId, loginStatus, userId, username) VALUES(?,?,NULL,NULL)",
-    [sessionId, loginStatus],
+    "INSERT into sessions (sessionId, loginStatus, userId, username, expiryTime) VALUES(?,?,NULL,NULL,?)",
+    [sessionId, loginStatus, expiryTime],
   );
 }
 
@@ -15,18 +15,23 @@ export function dbUpdateSession(sessionId, loginStatus, userId, username) {
 }
 
 export function dbDeleteSession(sessionId) {
-  db.query("DELETE FROM sessions WHERE sessionId=?", [sessionId]);
+  try {
+    db.query("DELETE FROM sessions WHERE sessionId=?", [sessionId]);
+    console.log("A session as just deleted");
+  } catch (_err) {
+    // Session was already deleted
+  }
 }
 
-// Checks if the sessionId that sent exist
+// Get data to check if the session exist
 export function dbIsValidSession(sessionId) {
-  const [session] = db.query("SELECT * FROM sessions WHERE sessionId=?", [
-    sessionId,
-  ]);
-  if (session === undefined) {
-    return false;
-  }
-  return true;
+  const [session] = db.query(
+    "SELECT expiryTime FROM sessions WHERE sessionId=?",
+    [
+      sessionId,
+    ],
+  );
+  return session;
 }
 
 // Checks if the user is login
@@ -51,4 +56,9 @@ export function dbGetuserId(sessionId) {
     sessionId,
   ]);
   return userId;
+}
+
+export function dbGetAllsessions() {
+  const sessions = db.query("SELECT * from sessions");
+  return sessions;
 }

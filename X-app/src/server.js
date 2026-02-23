@@ -1,14 +1,18 @@
 import { serveFile } from "serveFileModule";
 import { dirname, join } from "pathModule";
 import { fromFileUrl } from "fromFileUrlModule";
-import { getLoginStatus } from "./webauthn/sessions/session.js";
+import {
+  checkExpiryTimes,
+  getLoginStatus,
+} from "./webauthn/sessions/session.js";
 import setupDatabase from "./data-base/table.js";
 import compiledRouter from "./routes/table.js";
 import json from "./helper-functions/json-response.js";
 
-
 // setups data base
 setupDatabase();
+// Checks if has expried and set delete time other session
+checkExpiryTimes();
 
 // middleware
 

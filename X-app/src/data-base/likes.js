@@ -23,7 +23,7 @@ export function dbAddLike(postId, userId) {
 }
 
 // Remove user's like from post and like tracking
-export function dbRemoveLike(postId) {
+export function dbRemoveLike(postId, userId) {
   db.query(`DELETE FROM "likes-${postId}" WHERE userId=?`, [userId]);
   db.query("UPDATE posts set likes = likes - 1 WHERE id=?", [postId]);
 }
