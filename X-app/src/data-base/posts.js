@@ -2,28 +2,21 @@ import db from "./set-up.js";
 import { getId } from "../webauthn/sessions/session.js";
 
 // Adds a new post to the data base
-export function dbNewPost(postId, userId, username, context, time) {
+export function dbNewPost(postId, userId, username, content, time) {
   db.query(
     "INSERT INTO posts (id, userId, username, content, likes, time) VALUES(?, ?, ?, ?, 0, ?)",
-    [postId, userId, username, context, time],
+    [postId, userId, username, content, time],
   );
 }
 
 // Checks if a post is the users post with ids
 export function dbIsUsersPost(postId, req) {
-  let postUserId;
-  const [row] = db.query("SELECT userId FROM posts WHERE id=?", [
+  //let postUserId;
+  const [[postUserId]] = db.query("SELECT userId FROM posts WHERE id=?", [
     postId,
   ]);
 
-  if (row == undefined) {
-    return false;
-  } else {
-    [postUserId] = row;
-  }
-
   const currentUserId = getId(req);
-
   // Return if it their post or not
   return postUserId === currentUserId;
 }

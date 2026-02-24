@@ -10,7 +10,7 @@ async function checkIfLogin() {
   const res = await fetch("/is-login", { method: "GET" });
 
   const body = await res.json();
-  if (body.login == false) {
+  if (body.login === false) {
     globalThis.location.href = "./index.html";
   }
 }

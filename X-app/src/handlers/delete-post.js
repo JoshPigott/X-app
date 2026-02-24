@@ -8,7 +8,7 @@ const deletePost = (ctx) => {
   // Post maker only able to delete
   if (!dbIsUsersPost(postId, ctx.req)) {
     const html = /*html*/ `<div>Not your post</div>`;
-    return htmlResponse(html, { status: 404 });
+    return htmlResponse(html, { status: 403 });
   }
 
   // Deletes the post from the database

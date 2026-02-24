@@ -40,7 +40,13 @@ export function dbGetLoginStatus(sessionId) {
     "SELECT loginStatus FROM sessions WHERE sessionId=?",
     [sessionId],
   );
-  return loginStatus;
+  // Login in as true == "1"
+  if (loginStatus === "1") {
+    return true;
+  } // Not login in
+  else {
+    return false;
+  }
 }
 
 export function dbGetusername(sessionId) {

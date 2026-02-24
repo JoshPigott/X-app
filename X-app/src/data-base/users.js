@@ -10,7 +10,8 @@ export function dbGetId(username) {
     username,
   ]);
 
-  if (id !== undefined) { // I don't really understand why this happening
+  // Makes sure you don't unpack nothing
+  if (id !== undefined) {
     [id] = id;
   }
 

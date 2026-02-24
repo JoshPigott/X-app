@@ -21,20 +21,20 @@ const getTime = (time) => {
 
   const currentTime = Date.now();
   // Need to access specific methods
-  const dataObject = new Date(time);
+  const dateObject = new Date(time);
   const timeDifference = currentTime - time;
 
   // Check if has longer than a specific time frame and returns a format time
   if (timeDifference > YEAR) {
-    const year = dataObject.getFullYear();
-    const monthIndex = dataObject.getMonth();
+    const year = dateObject.getFullYear();
+    const monthIndex = dateObject.getMonth();
     const month = MONTHS[monthIndex];
-    const date = dataObject.getDate();
+    const date = dateObject.getDate();
     return `${year} ${month} ${date}`;
   } else if (timeDifference > MONTH) {
-    const monthIndex = dataObject.getMonth();
+    const monthIndex = dateObject.getMonth();
     const month = MONTHS[monthIndex];
-    const date = dataObject.getDate();
+    const date = dateObject.getDate();
     return `${month} ${date}`;
   } else if (timeDifference > HOUR) {
     const hours = Math.round(timeDifference / HOUR);
