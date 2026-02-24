@@ -1,4 +1,4 @@
-import { generateRegistrationOptions } from "authModule";
+import { generateRegistrationOptions } from "@simplewebauthn/server";
 
 // info need to set up a passkey
 const createOptions = async (username, id) => {

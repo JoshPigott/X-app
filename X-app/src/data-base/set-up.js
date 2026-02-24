@@ -1,4 +1,4 @@
-import { DB } from "sqliteModule";
+import { DB } from "sqlite";
 const db = new DB("src/data/database.db");
 export default db;
 

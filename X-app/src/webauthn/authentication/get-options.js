@@ -1,4 +1,4 @@
-import { generateAuthenticationOptions } from "authModule";
+import { generateAuthenticationOptions } from "@simplewebauthn/server";
 
 // Gets the current account's info to make a passkey
 const getOptions = async () => {

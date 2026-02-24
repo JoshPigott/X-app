@@ -1,6 +1,6 @@
-import { serveFile } from "serveFileModule";
-import { dirname, join } from "pathModule";
-import { fromFileUrl } from "fromFileUrlModule";
+import { serveFile } from "@std/http/file-server";
+import { dirname, join } from "@std/path";
+import { fromFileUrl } from "@std/path/from-file-url";
 import {
   checkExpiryTimes,
   getLoginStatus,
