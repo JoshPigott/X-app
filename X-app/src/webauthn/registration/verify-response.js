@@ -1,4 +1,4 @@
-import { verifyRegistrationResponse } from "authModule";
+import { verifyRegistrationResponse } from "@simplewebauthn/server";
 import { dbGetAuthChallenge } from "../../data-base/account-challenge.js";
 import { dbAddPasskey } from "../../data-base/passkeys.js";
 import { dbAddUser } from "../../data-base/users.js";
