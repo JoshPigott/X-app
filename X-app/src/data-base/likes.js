@@ -35,7 +35,7 @@ export function dbGetHasLiked(postId, userId) {
     [userId],
   );
   // The user has not liked the post
-  if (user == undefined) {
+  if (user === undefined || user === false) {
     return false;
   }
   return true;

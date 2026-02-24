@@ -6,7 +6,7 @@ async function authenticate(e) {
   const response = e.detail.xhr;
 
   // gets login options
-  const options = await JSON.parse(response.responseText);
+  const options = JSON.parse(response.responseText);
 
   // Allow you to show the user what is happeing so it does look the stite has crashed
   const meassage = document.querySelector(".auth-page__meassage");

@@ -14,7 +14,7 @@ export async function registerStart(ctx) {
   // Existing account
   if (id !== undefined) {
     console.log("Account already exists");
-    return json({ error: "Account already exists" }, { status: 404 });
+    return json({ error: "Account already exists" }, { status: 409 });
   }
 
   // New account

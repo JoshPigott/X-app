@@ -17,7 +17,7 @@ export function dbUpdateSession(sessionId, loginStatus, userId, username) {
 export function dbDeleteSession(sessionId) {
   try {
     db.query("DELETE FROM sessions WHERE sessionId=?", [sessionId]);
-    console.log("A session as just deleted");
+    console.log("A session was just deleted");
   } catch (_err) {
     // Session was already deleted
   }
@@ -40,7 +40,13 @@ export function dbGetLoginStatus(sessionId) {
     "SELECT loginStatus FROM sessions WHERE sessionId=?",
     [sessionId],
   );
-  return loginStatus;
+  // Login in as true == "1"
+  if (loginStatus === "1") {
+    return true;
+  } // Not login in
+  else {
+    return false;
+  }
 }
 
 export function dbGetusername(sessionId) {

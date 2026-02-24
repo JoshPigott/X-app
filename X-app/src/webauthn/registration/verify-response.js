@@ -21,11 +21,13 @@ function addUserAndPasskey(verification, sessionId, account) {
 }
 
 async function getVerification(body, auth) {
+  const ORIGIN = Deno.env.get("ORIGIN") || "http://localhost:8000";
+  const RP_ID = Deno.env.get("RP_ID") || "localhost";
   const verification = await verifyRegistrationResponse({
     response: body,
     expectedChallenge: auth.challenge,
-    expectedOrigin: "http://localhost:8000",
-    expectedRPID: "localhost",
+    expectedOrigin: ORIGIN,
+    expectedRPID: RP_ID,
   });
   return verification;
 }
