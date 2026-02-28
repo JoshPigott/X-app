@@ -41,69 +41,87 @@ Home page
 ## Project structure
 
 ```txt
+├── .env
+├── .gitignore
 ├── deno.json
 ├── deno.lock
+├── passkeys-storage.txt
 ├── README.md
 │
 ├── .vscode
-│    └── settings.json
+│   ├── launch.json
+│   └── settings.json
 │
 ├── data
+│   ├── .gitkeep
 │   └── database.db
 │
 └── src
     ├── server.js
     │
-    ├── webauthn
-    │   ├── authentication
-    │   │   ├── get-options.js
-    │   │   └── verify-response.js
-    │   │   
-    │   ├── registration
-    │   │   ├── create-options.js
-    │   │   └── verify-response.js
-    │   │       
-    │   └── sessions.js
-    │       └── session.js
-    │
     ├── database
-    │   ├── account-challenge.js   
+    │   ├── connection.js
     │   ├── likes.js
-    │   ├── passkeys.js    
+    │   ├── passkeys.js
     │   ├── posts.js
-    │   ├── table.js
+    │   ├── schema.js
+    │   ├── sessions.js
     │   └── users.js
     │
     ├── handlers
-    │   ├── authentication.js    
-    │   ├── delete-post.js
-    │   ├── get-posts.js
+    │   ├── auth.js
+    │   ├── is-login.js
     │   ├── like-unlike.js
-    │   ├── post.js
-    │   └── registration.js
+    │   └── post.js
     │
-    ├── utils
-    │   ├── json-response.js   
-    │   ├── html-response.js
-    │   └── get-time.js
+    ├── middleware
+    │   └── auth.js
     │
     ├── public
-    │   ├── authentication.js
-    │   ├── registration.js        
+    │   ├── home.html
     │   ├── index.html
+    │   ├── style.css
     │   │
-    │   └── assets     
-    │       └── profile-pic.png
-    │ 
-    ├── views
-    │   ├── likes.js
-    │   ├── list.js   
-    │   └── post-template.js
+    │   ├── assets
+    │   │   └── profile-pic.png
+    │   │
+    │   └── scripts
+    │       ├── authentication.js
+    │       ├── check-if-login.js
+    │       └── registration.js
     │
     ├── routes
-    │   └── table.js
+    │   └── index.js
+    │
+    ├── screenshots
+    │   ├── auth-page.png
+    │   ├── home-1.png
+    │   ├── home-2.png
+    │   └── passkeys.png
+    │
+    ├── services
+    │   ├── account-challenge.js
+    │   ├── session.js
+    │   │
+    │   └── webauthn
+    │       ├── authentication
+    │       │   ├── get-options.js
+    │       │   └── verify-response.js
+    │       │
+    │       └── registration
+    │           ├── create-options.js
+    │           └── verify-response.js
+    │
+    ├── utils
+    │   ├── escape-html.js
+    │   ├── get-time.js
+    │   ├── html-response.js
+    │   └── json-response.js
     │
     └── views
+        ├── likes.js
+        ├── list.js
+        └── post-template.js
 ```
 
 ## Key logic
@@ -144,7 +162,6 @@ Home page
 
 ## known promblems
 
-- Likes aren’t tied to accounts, so refreshing allows repeated likes.
 - passkeys take a long time
 - Lacks a lot of features
 - for you and following are just looks not function
