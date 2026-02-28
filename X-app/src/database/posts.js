@@ -1,5 +1,5 @@
-import db from "./set-up.js";
-import { getId } from "../webauthn/sessions/session.js";
+import db from "./connection.js";
+import { getId } from "../services/session.js";
 
 // Adds a new post to the data base
 export function dbNewPost(postId, userId, username, content, time) {

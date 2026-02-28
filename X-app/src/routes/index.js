@@ -1,16 +1,11 @@
 // deno-fmt-ignore-file
 
 // Imports all the handler
-import { registerStart, regVerify } from "../handlers/registration.js";
-import { authenticateStart, authVerify } from "../handlers/authentication.js";
-import isLogin from "../handlers/is-login.js"
-
-import post from "../handlers/post.js";
+import { registerStart, authenticateStart, regVerify, authVerify } from "../handlers/auth.js";
+import isLogin from "../handlers/is-login.js";
+import {addPost, getPosts, deletePost } from "../handlers/post.js";
 import { like, unlike } from "../handlers/like-unlike.js";
-import deletePost from "../handlers/delete-post.js";
-import getPosts from "../handlers/get-posts.js";
-
-import { requireAuth } from "../server.js"
+import requireAuth from "../middleware/auth.js";
 
 // Links methods, pathnames and handler together
 const tableRouter = [
@@ -19,7 +14,7 @@ const tableRouter = [
   { method: "POST",   path: "/authenticate/start",        handler: authenticateStart },
   { method: "POST",   path: "/register/verification",     handler: regVerify },
   { method: "POST",   path: "/authenticate/verification", handler: authVerify },
-  { method: "POST",   path: "/post",                      handler: requireAuth(post) },
+  { method: "POST",   path: "/post",                      handler: requireAuth(addPost) },
   { method: "POST",   path: "/post/:id/like",             handler: requireAuth(like) },
   { method: "POST",   path: "/post/:id/unlike",           handler: requireAuth(unlike) },
   { method: "DELETE", path: "/post/:id",                  handler: requireAuth(deletePost) },

@@ -1,32 +1,15 @@
 import { serveFile } from "@std/http/file-server";
 import { dirname, join } from "@std/path";
 import { fromFileUrl } from "@std/path/from-file-url";
-import {
-  checkExpiryTimes,
-  getLoginStatus,
-} from "./webauthn/sessions/session.js";
-import setupDatabase from "./data-base/table.js";
-import compiledRouter from "./routes/table.js";
-import json from "./helper-functions/json-response.js";
+import { checkExpiryTimes } from "./services/session.js";
+import setupDatabase from "./database/schema.js";
+import compiledRouter from "./routes/index.js";
+import json from "./utils/json-response.js";
 
 // setups data base
 setupDatabase();
 // Checks if has expried and set delete time other session
 checkExpiryTimes();
-
-// middleware
-
-// Check if login or not with a session
-export function requireAuth(handler) {
-  return (ctx) => {
-    const loginStatus = getLoginStatus(ctx.req);
-    if (loginStatus === false) {
-      console.log("Unauthorised request");
-      return new Response("Unauthorised", { status: 401 });
-    }
-    return handler(ctx);
-  };
-}
 
 async function isStaticFile(filePath) {
   try {

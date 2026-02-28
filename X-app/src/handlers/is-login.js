@@ -1,6 +1,6 @@
-import { getLoginStatus } from "./../webauthn/sessions/session.js";
+import { getLoginStatus } from "./../services/session.js";
 
-import json from "../helper-functions/json-response.js";
+import json from "../utils/json-response.js";
 function isLogin(ctx) {
   const login = getLoginStatus(ctx.req);
   return json({ login }, { status: 200 });

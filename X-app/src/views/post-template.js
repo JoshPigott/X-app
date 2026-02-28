@@ -1,10 +1,10 @@
-import getTime from "../helper-functions/get-time.js";
-import { dbIsUsersPost } from "../data-base/posts.js";
-import { getId } from "../webauthn/sessions/session.js";
-import escapeHtml from "../helper-functions/escape-html.js";
-import { dbGetHasLiked, dbGetLikeNumber } from "../data-base/likes.js";
+import getTime from "../utils/get-time.js";
+import { dbIsUsersPost } from "../database/posts.js";
+import { getId } from "../services/session.js";
+import escapeHtml from "../utils/escape-html.js";
+import { dbGetHasLiked, dbGetLikeNumber } from "../database/likes.js";
 
-import { likeTemplate, unlikeTemplate } from "../view/likes.js";
+import { likeTemplate, unlikeTemplate } from "../views/likes.js";
 
 function getPostTemplate(post, req) {
   // Checks whether the current user created the post, ensuring only the creator can delete it.

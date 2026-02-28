@@ -66,7 +66,7 @@ Home page
     │   └── sessions.js
     │       └── session.js
     │
-    ├── data-base
+    ├── database
     │   ├── account-challenge.js   
     │   ├── likes.js
     │   ├── passkeys.js    
@@ -82,7 +82,7 @@ Home page
     │   ├── post.js
     │   └── registration.js
     │
-    ├── helper-functions
+    ├── utils
     │   ├── json-response.js   
     │   ├── html-response.js
     │   └── get-time.js
@@ -95,7 +95,7 @@ Home page
     │   └── assets     
     │       └── profile-pic.png
     │ 
-    ├── view
+    ├── views
     │   ├── likes.js
     │   ├── list.js   
     │   └── post-template.js
@@ -103,7 +103,7 @@ Home page
     ├── routes
     │   └── table.js
     │
-    └── view
+    └── views
 ```
 
 ## Key logic

@@ -10,7 +10,7 @@ async function register(e) {
   // Allow you to show the user what is happeing so it does look the stite has crashed
   const meassage = document.querySelector(".auth-page__meassage");
 
-  if (response.status === 404) {
+  if (response.status === 409) {
     console.log(options.error);
     meassage.textContent = `${options.error}`;
     return;

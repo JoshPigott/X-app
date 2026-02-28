@@ -7,7 +7,7 @@ import {
   dbGetusername,
   dbIsValidSession,
   dbUpdateSession,
-} from "../../data-base/sessions.js";
+} from "../database/sessions.js";
 
 // Makes new session and stores it
 export function createSession() {

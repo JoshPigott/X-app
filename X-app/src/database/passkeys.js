@@ -1,4 +1,4 @@
-import db from "./set-up.js";
+import db from "./connection.js";
 
 // Note: transports = [transportsType], transportsType = "internal" (often),  as an array can't be stored in the database
 

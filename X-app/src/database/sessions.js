@@ -1,4 +1,4 @@
-import db from "./set-up.js";
+import db from "./connection.js";
 
 export function dbCreateSession(sessionId, loginStatus, expiryTime) {
   db.query(
