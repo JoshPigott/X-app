@@ -1,9 +1,12 @@
 import { verifyAuthenticationResponse } from "@simplewebauthn/server";
-import { dbGetAuthChallenge } from "../../data-base/account-challenge.js";
-import { dbGetCredentials, dbUpdateCounter } from "../../data-base/passkeys.js";
-import { updateSession } from "../sessions/session.js";
+import { dbGetAuthChallenge } from "../../account-challenge.js";
+import {
+  dbGetCredentials,
+  dbUpdateCounter,
+} from "../../../database/passkeys.js";
+import { updateSession } from "../../session.js";
 
-import json from "../../helper-functions/json-response.js";
+import json from "../../../utils/json-response.js";
 
 async function getVerification(body, auth) {
   const ORIGIN = Deno.env.get("ORIGIN") || "http://localhost:8000";

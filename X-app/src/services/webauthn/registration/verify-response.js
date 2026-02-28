@@ -1,9 +1,9 @@
 import { verifyRegistrationResponse } from "@simplewebauthn/server";
-import { dbGetAuthChallenge } from "../../data-base/account-challenge.js";
-import { dbAddPasskey } from "../../data-base/passkeys.js";
-import { dbAddUser } from "../../data-base/users.js";
-import { updateSession } from "../sessions/session.js";
-import json from "../../helper-functions/json-response.js";
+import { dbGetAuthChallenge } from "../../account-challenge.js";
+import { dbAddPasskey } from "../../../database/passkeys.js";
+import { dbAddUser } from "../../../database/users.js";
+import { updateSession } from "../../session.js";
+import json from "../../../utils/json-response.js";
 
 // Adds passkey info to data base, creates new account in data, creates a new session
 function addUserAndPasskey(verification, sessionId, account) {

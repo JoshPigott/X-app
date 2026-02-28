@@ -1,4 +1,4 @@
-import db from "./set-up.js";
+import db from "./connection.js";
 
 const setupDatabase = () => {
   // Users table

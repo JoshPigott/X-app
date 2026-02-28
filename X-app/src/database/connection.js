@@ -1,5 +1,5 @@
 import { DB } from "sqlite";
-const db = new DB("src/data/database.db");
+const db = new DB("data/database.db");
 export default db;
 
 // Makes database get closed when server stops running

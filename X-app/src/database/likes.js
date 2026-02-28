@@ -1,4 +1,4 @@
-import db from "./set-up.js";
+import db from "./connection.js";
 
 // Creates a "likes" table for a specific post
 export function dbCreateLikeTable(postId) {

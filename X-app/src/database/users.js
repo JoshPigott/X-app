@@ -1,4 +1,4 @@
-import db from "./set-up.js";
+import db from "./connection.js";
 
 export function dbAddUser(id, username) {
   db.query("INSERT INTO users (id, username) VALUES(?, ?)", [id, username]);

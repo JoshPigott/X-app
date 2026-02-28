@@ -3,10 +3,10 @@ import {
   dbGetHasLiked,
   dbGetLikeNumber,
   dbRemoveLike,
-} from "../data-base/likes.js";
-import { getId } from "../webauthn/sessions/session.js";
-import { likeTemplate, unlikeTemplate } from "../view/likes.js";
-import htmlResponse from "../helper-functions/html-response.js";
+} from "../database/likes.js";
+import { getId } from "../services/session.js";
+import { likeTemplate, unlikeTemplate } from "../views/likes.js";
+import htmlResponse from "../utils/html-response.js";
 
 // Increases the number of likes on the post by one
 export function like(ctx) {
