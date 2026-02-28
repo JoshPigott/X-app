@@ -15,7 +15,6 @@ const getTime = (time) => {
   ];
   // conversion to milliseconds
   const YEAR = 31540000000;
-  const MONTH = 2628000000;
   const DAY = 86400000;
   const HOUR = 3600000;
   const MINUTES = 60000;
@@ -24,7 +23,6 @@ const getTime = (time) => {
   // Need to access specific methods
   const dateObject = new Date(time);
   const timeDifference = currentTime - time;
-  console.log(timeDifference);
 
   // Check if has longer than a specific time frame and returns a format time
   if (timeDifference > YEAR) {

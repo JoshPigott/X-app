@@ -8,22 +8,31 @@ async function register(e) {
   const options = JSON.parse(response.responseText);
 
   // Allow you to show the user what is happeing so it does look the stite has crashed
-  const meassage = document.querySelector(".auth-page__meassage");
+  const message = document.querySelector(".auth-page__meassage");
 
   if (response.status === 409) {
     console.log(options.error);
-    meassage.textContent = `${options.error}`;
+    message.textContent = `${options.error}`;
     return;
   }
 
-  meassage.textContent = [
+  message.textContent = [
     "Please wait.",
     "Processing the passkey...",
     "This may take some time.",
   ].join("\n");
 
   // starts registration with passkey
-  const attestation = await startRegistration({ optionsJSON: options });
+  let attestation;
+  try {
+    attestation = await startRegistration({ optionsJSON: options });
+  } catch (_err) {
+    message.textContent = [
+      "Passkey registration",
+      "was cancelled or failed",
+    ].join("\n");
+    return;
+  }
 
   // checks signed passkey challenge
   const res = await fetch("/register/verification", {
